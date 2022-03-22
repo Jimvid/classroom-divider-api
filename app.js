@@ -14,6 +14,7 @@ app.use(bodyParser.json())
 //parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
 
+// Verify JWT
 const jwtCheck = jwt({
   secret: jwks.expressJwtSecret({
     cache: true,
@@ -25,7 +26,7 @@ const jwtCheck = jwt({
   issuer: "https://dev-2x1iyt13.eu.auth0.com/",
   algorithms: ["RS256"],
 })
-// Verify jwt
+
 app.use(jwtCheck)
 
 // Routes

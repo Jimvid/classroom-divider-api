@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize")
 const sequelize = require("../config/db")
 
-const User = sequelize.define("User", {
+const Student = sequelize.define("Student", {
   firstName: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -11,7 +11,7 @@ const User = sequelize.define("User", {
         msg: "Provide valid first name",
       },
       notEmpty: {
-        msg: "You must provide your first name",
+        msg: "You must provide a first name",
       },
     },
   },
@@ -24,28 +24,19 @@ const User = sequelize.define("User", {
         msg: "Provide valid last name",
       },
       notEmpty: {
-        msg: "You must provide your last name",
+        msg: "You must provide a last name",
       },
     },
   },
-  email: {
+  classroomId: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
-    validate: {
-      isEmail: {
-        msg: "Provide a valid email",
-      },
-    },
-  },
-  password: {
-    type: DataTypes.STRING,
     validate: {
       notEmpty: {
-        msg: "Password cannot be blank",
+        msg: "classroom ID is required",
       },
     },
   },
 })
 
-module.exports = User
+module.exports = Student

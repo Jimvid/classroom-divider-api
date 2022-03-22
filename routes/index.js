@@ -1,16 +1,10 @@
 const express = require("express")
 const router = express.Router()
-const userController = require("../controllers/userController")
-const errorHandlers = require("../handlers/errorHandlers")
 
-// Auth
-router.use("/users", require("./user"))
+// Classrooms
+router.use("/classrooms", require("./classrooms"))
 
-router.use("/", (req, res) => {
-  res.status(200).json({
-    hi: "there",
-    cat: "dog",
-  })
-})
+// Students
+router.use("/students", require("./students"))
 
 module.exports = router
