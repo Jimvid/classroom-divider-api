@@ -1,7 +1,8 @@
 const { DataTypes } = require("sequelize")
 const sequelize = require("../config/db")
+const Student = require("./Student")
 
-const Classroom = sequelize.define("Classroom", {
+const Classroom = sequelize.define("classroom", {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -25,5 +26,8 @@ const Classroom = sequelize.define("Classroom", {
     },
   },
 })
+
+Classroom.hasMany(Student, { as: "students" })
+Student.belongsTo(Classroom, { foreignKey: "classroomId", as: "classroom" })
 
 module.exports = Classroom

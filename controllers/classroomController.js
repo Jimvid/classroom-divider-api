@@ -1,13 +1,13 @@
 const Classroom = require("../models/Classroom")
 const Student = require("../models/Student")
 
-// Create user
+// Create classroom
 exports.create = async (req, res, next) => {
-  const { name, userId } = req.body
+  console.log("whoho I got hit :( ")
+  const { name } = req.body
+  const userId = req.user.sub
 
-  // await Classroom.sync({ force: true })
-
-  let classroom = await Classroom.findOne({ where: { name } })
+  let classroom = await Classroom.findOne({ where: { name, userId } })
 
   if (classroom) {
     res.status(400).json({ msg: "Classroom already exists" })
@@ -47,11 +47,12 @@ exports.delete = async (req, res) => {
 
   const classroom = await Classroom.findOne({
     where: { id },
+    include: ["students"],
   })
 
   if (classroom) {
     await classroom.destroy()
-    res.send(`Classroom ${classroom.name} was deleted.`)
+    res.status(200).json(classroom)
   } else {
     res.send(`Could not delete classroom as it does not exist.`)
   }
@@ -59,15 +60,21 @@ exports.delete = async (req, res) => {
 
 // Get all classrooms for a user
 exports.getAllByUser = async (req, res) => {
+  const userId = req.user.sub
+
+  // await Classroom.findByPk(1, { include: ["students"] })
   const classrooms = await Classroom.findAll({
-    where: {
-      userId: req.body.userId,
-    },
+    where: { userId },
+    include: ["students"],
   })
-  res.json(classrooms)
+  if (classrooms) {
+    res.json(classrooms)
+  } else {
+    res.send(`Could not find any classrooms`)
+  }
 }
 
-// Get all students in a classroom
+// Get one classroom
 exports.getOne = async (req, res) => {
   const id = req.params.id
 

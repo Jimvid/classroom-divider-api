@@ -1,15 +1,22 @@
 const Sequelize = require("sequelize")
 
 // Variables
-const username = process.env.DB_USERNAME
-const password = process.env.DB_PASSWORD
-const dbName = process.env.DB_NAME
-const host = process.env.HOST
+// const username = process.env.DB_USERNAME
+// const password = process.env.DB_PASSWORD
+// const dbName = process.env.DB_NAME
+// const host = process.env.HOST
+const dialectOptions = process.env.NODE_ENV === "production" && {
+  ssl: {
+    require: true,
+    rejectUnauthorized: false,
+  },
+}
 
 // initialze an instance of Sequelize
-const sequelize = new Sequelize(dbName, username, password, {
-  host: host,
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
+  protocol: "postgres",
+  dialectOptions,
   pool: {
     max: 9,
     min: 0,

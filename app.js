@@ -2,6 +2,7 @@ const express = require("express")
 const bodyParser = require("body-parser")
 const routes = require("./routes")
 const errorHandlers = require("./handlers/errorHandlers")
+const cors = require("cors")
 
 const jwt = require("express-jwt")
 const jwks = require("jwks-rsa")
@@ -10,9 +11,11 @@ const app = express()
 
 // Takes the raw requests and turns them into usable properties on req.body
 app.use(bodyParser.json())
-
 //parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
+
+// Cors
+app.use(cors())
 
 // Verify JWT
 const jwtCheck = jwt({

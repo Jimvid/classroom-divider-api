@@ -19,9 +19,11 @@ exports.getOne = async (req, res) => {
 exports.create = async (req, res, next) => {
   const { firstName, lastName, classroomId } = req.body
 
+  // await Student.sync({ force: true })
+
   // Check if student exists
   const student = await Student.findOne({
-    where: { firstName, lastName },
+    where: { firstName, lastName, classroomId },
   })
 
   if (student) {
@@ -65,7 +67,7 @@ exports.delete = async (req, res) => {
 
   if (student) {
     await student.destroy()
-    res.send(`${student.firstName} ${student.lastName} was deleted.`)
+    res.send(student)
   } else {
     res.send(`Could not delete student as it does not exist.`)
   }
