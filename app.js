@@ -45,6 +45,6 @@ if (app.get("env") === "development") {
 }
 
 // production error handler
-// app.use(errorHandlers.productionErrors)
+app.use(errorHandlers.productionErrors)
 
 module.exports = app
