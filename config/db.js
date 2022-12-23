@@ -1,10 +1,5 @@
 const Sequelize = require("sequelize")
 
-// Variables
-// const username = process.env.DB_USERNAME
-// const password = process.env.DB_PASSWORD
-// const dbName = process.env.DB_NAME
-// const host = process.env.HOST
 const dialectOptions = process.env.NODE_ENV === "production" && {
   ssl: {
     require: true,
@@ -24,7 +19,6 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
   },
 })
 
-// check the databse connection
 sequelize
   .authenticate()
   .then(() => console.log("Connection has been established successfully."))
